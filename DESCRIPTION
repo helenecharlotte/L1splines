@@ -10,7 +10,7 @@ Description: Green's functions, corresponding splines; Constrained splines;
 License: MIT
 LazyData: TRUE
 Depends:
-    R
+    R (>= 3.2.3)
 Imports:
     dplyr,
     gtable,
