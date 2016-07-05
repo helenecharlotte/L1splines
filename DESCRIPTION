@@ -1,0 +1,38 @@
+Package: rSplines
+Type: Package
+Title: Robust splines
+Version: 0.1
+Date: 2016-05-03
+Authors@R: person("Helene Charlotte", "Rytgaard", email = "helenerytgaard@gmail.com",
+  role = c("aut", "cre"))
+Description: Green's functions, corresponding splines; Constrained splines;
+    L1 splines; skewed splines; adapted splines;
+License: MIT
+LazyData: TRUE
+Depends:
+    R (>= 3.2.3)
+Imports:
+    dplyr,
+    gtable,
+    ggplot2,
+    grid,
+    Rmisc,
+    xtable,
+    gridExtra,
+    reshape2,
+    fda,
+    quadprog,
+    matrixcalc,
+    Matrix,
+    rgl,
+    wesanderson,
+    MASS,
+    nleqslv,
+    Rcpp
+URL: https://github.com/helenecharlotte/rSplines
+BugReports: http://github.com/helenecharlotte/rSplines/issues
+RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+LinkingTo: Rcpp
