@@ -38,8 +38,9 @@ NumericMatrix outerfun(NumericVector t, NumericVector y, int gfun, double lambda
       }
     }
   }
+  arma::mat B;
   arma::mat A = as<arma::mat>(out);
-  arma::mat B = pinv(A);
+  B = arma::inv(A);
   return wrap(B);
 }
 
