@@ -106,6 +106,7 @@ G10 = function(s, t)
 #' t = generate.t(m = 25); y = generate.y()(t) + generate.noise(t, type = 2)
 #' plot(t, y, col = "blue")
 #' lines(t, thetafun(t, y, G9, lambda = 0.0001))
+#' @export
 thetafun = function(t, y, gfun, x = Inf, lambda=0.001) {
   m = length(t)
   G = G0 = outer(t, t, gfun)

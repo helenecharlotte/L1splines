@@ -36,4 +36,5 @@ RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
-LinkingTo: Rcpp
+LinkingTo: Rcpp,
+           RcppArmadillo
