@@ -28,7 +28,8 @@ Imports:
     wesanderson,
     MASS,
     nleqslv,
-    Rcpp
+    Rcpp,
+    RcppArmadillo
 URL: https://github.com/helenecharlotte/rSplines
 BugReports: http://github.com/helenecharlotte/rSplines/issues
 RoxygenNote: 5.0.1
