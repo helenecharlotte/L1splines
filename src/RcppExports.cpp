@@ -29,9 +29,9 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// outerfun
-NumericMatrix outerfun(NumericVector t, NumericVector y, int gfun, double lambda);
-RcppExport SEXP L1splines_outerfun(SEXP tSEXP, SEXP ySEXP, SEXP gfunSEXP, SEXP lambdaSEXP) {
+// L2spline
+NumericVector L2spline(NumericVector t, NumericVector y, int gfun, double lambda);
+RcppExport SEXP L1splines_L2spline(SEXP tSEXP, SEXP ySEXP, SEXP gfunSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -39,7 +39,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
     Rcpp::traits::input_parameter< int >::type gfun(gfunSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
-    __result = Rcpp::wrap(outerfun(t, y, gfun, lambda));
+    __result = Rcpp::wrap(L2spline(t, y, gfun, lambda));
     return __result;
 END_RCPP
 }

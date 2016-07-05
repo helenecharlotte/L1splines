@@ -2,46 +2,61 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
-double plusfun(double x) {
-  if (x > 0) {
-    return x;
-  } else {
-    return 0;
-  }
-}
-
-// [[Rcpp::export]]
-double G1(double s, double t) {
-  double out =  1/(double)6 * (pow(t-s, 3) * plusfun(t-s) - pow(t, 2) * pow(s-1, 2) * (2*s*t-3*s+t));
-  return out;
-}
-
-
-//' something something
+//' Spline function.
 //'
-//' @description
-//' @param x A matrix.
-//' @return A matrix of same size as x.
+//' @description Function to fit the L2 spline using some Greens function.
+//'
+//' @param t Numeric vector of evaluation times.
+//' @param y Numeric vector to be fitted.
+//' @param gfun Integer value 1-10 (choice of Greens function).
+//' @param lambda Numeric (smoothness parameter).
+//'
+//' @return Numeric vector of fitted values.
+//'
 //' @author Helene Charlotte Rytgaard
 //' @examples
+//' t = generate.t(m = 25); y = generate.y()(t) + generate.noise(t, type = 2)
+//' plot(t, y, col = "blue")
+//' lines(t, thetafun(t, y, 9, lambda = 0.0001))
 //' @export
 // [[Rcpp::export]]
-NumericMatrix outerfun(NumericVector t, NumericVector y, int gfun, double lambda){
+NumericVector L2spline(NumericVector t, NumericVector y, int gfun, double lambda){
   int nrow = t.size();
   NumericMatrix out(nrow, nrow);
   for(int i = 0; i < nrow; ++i) {
-    out(i, i) = 1/double(6) * (- pow(t[i], 2) * pow(t[i]-1, 2) * (2*t[i]*t[i] - 3*t[i] + t[i])) + lambda;
-    for (int j = 0; j < i; j++) {
+    for (int j = 0; j < i+1; j++) {
       if (gfun == 1) {
         out(i, j) = out(j, i) = 1/double(6) * (- pow(t[j], 2) * pow(t[i]-1, 2) * (2*t[i]*t[j] - 3*t[i] + t[j]));
+       // out(j, i) += 1/double(6) * pow(t[i] - t[j], 3);
+      } else if (gfun == 2) {
+        out(i, j) = out(j, i) = 1/double(6) * (- t[j] * (1 - t[i]) * (pow(t[j], 2) - 2*t[i] + pow(t[i], 2)));
+      } else if (gfun == 3) {
+        out(i, j) = out(j, i) = 1/double(6) * (- t[j] * (3*pow(t[i], 2) + pow(t[j], 2) - 6*t[i]));
+      } else if (gfun == 4) {
+        out(i, j) = out(j, i) = 1/double(12) * (- t[j] * pow(t[i]-1, 2) * (t[i]*pow(t[j], 2) + 2 * pow(t[j], 2) - 3*t[i]));
+      } else if (gfun == 5) {
+        out(i, j) = out(j, i) = 1/double(12) * (- pow(t[j], 2) * (t[i] - 1) * (pow(t[i], 2)*t[j] - 3*pow(t[i], 2) - 2*t[i]*t[j] + 6*t[i] - 2*t[j]));
+      } else if (gfun == 6) {
+        out(i, j) = out(j, i) = 1/double(12) * (- pow(t[j], 2) * (3*pow(t[i], 2) - 6*t[i] + 2*t[j]));
+      } else if (gfun == 7) {
+        out(i, j) = out(j, i) = 1/double(12) * (pow(t[i]-1, 2) * (-3*pow(t[j], 2) + 2*t[i] + 1));
+      } else if (gfun == 8) {
+        out(i, j) = out(j, i) = 1/double(6) * (pow(t[i]-1, 2) * (t[i] -3*t[j] + 2));
+      } else if (gfun == 9) {
+        out(i, j) = out(j, i) = 1/double(6) * (pow(t[j], 2) * (3*t[i] - t[j]));
+      } else if (gfun == 10) {
+        out(i, j) = out(j, i) = 1/double(6) * ((t[i]-1) * (pow(t[i], 2) + 3 * pow(t[j], 2) - 2 * t[i] - 2));
       }
     }
   }
   arma::mat B;
+  arma::mat C;
   arma::mat A = as<arma::mat>(out);
-  B = arma::inv(A);
-  return wrap(B);
+  arma::vec a = as<arma::vec>(y);
+  C = A;
+  C.diag() += lambda;
+  B = arma::inv(C);
+  return wrap(A * B * a);
 }
 
 

@@ -17,7 +17,7 @@ G1 <- function(s, t) {
 #' @author Helene Charlotte Rytgaard
 #' @examples
 #' @export
-outerfun <- function(t, y, gfun, lambda) {
-    .Call('L1splines_outerfun', PACKAGE = 'L1splines', t, y, gfun, lambda)
+L2spline <- function(t, y, gfun, lambda) {
+    .Call('L1splines_L2spline', PACKAGE = 'L1splines', t, y, gfun, lambda)
 }
 
