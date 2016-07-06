@@ -6,9 +6,9 @@
 
 using namespace Rcpp;
 
-// L2spline
-NumericVector L2spline(NumericVector t, NumericVector y, int gfun, double lambda);
-RcppExport SEXP L1splines_L2spline(SEXP tSEXP, SEXP ySEXP, SEXP gfunSEXP, SEXP lambdaSEXP) {
+// thetafun
+NumericVector thetafun(NumericVector t, NumericVector y, int gfun, double lambda);
+RcppExport SEXP L1splines_thetafun(SEXP tSEXP, SEXP ySEXP, SEXP gfunSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -16,7 +16,35 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
     Rcpp::traits::input_parameter< int >::type gfun(gfunSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
-    __result = Rcpp::wrap(L2spline(t, y, gfun, lambda));
+    __result = Rcpp::wrap(thetafun(t, y, gfun, lambda));
+    return __result;
+END_RCPP
+}
+// outerG
+NumericMatrix outerG(NumericVector t, NumericVector tp, int gfun, bool inv);
+RcppExport SEXP L1splines_outerG(SEXP tSEXP, SEXP tpSEXP, SEXP gfunSEXP, SEXP invSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type tp(tpSEXP);
+    Rcpp::traits::input_parameter< int >::type gfun(gfunSEXP);
+    Rcpp::traits::input_parameter< bool >::type inv(invSEXP);
+    __result = Rcpp::wrap(outerG(t, tp, gfun, inv));
+    return __result;
+END_RCPP
+}
+// thetafunG
+NumericMatrix thetafunG(NumericVector t, NumericVector y, int gfun, double lambda);
+RcppExport SEXP L1splines_thetafunG(SEXP tSEXP, SEXP ySEXP, SEXP gfunSEXP, SEXP lambdaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type gfun(gfunSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    __result = Rcpp::wrap(thetafunG(t, y, gfun, lambda));
     return __result;
 END_RCPP
 }

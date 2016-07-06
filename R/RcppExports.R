@@ -18,7 +18,41 @@
 #' plot(t, y, col = "blue")
 #' lines(t, thetafun(t, y, 9, lambda = 0.0001))
 #' @export
-L2spline <- function(t, y, gfun, lambda) {
-    .Call('L1splines_L2spline', PACKAGE = 'L1splines', t, y, gfun, lambda)
+thetafun <- function(t, y, gfun, lambda) {
+    .Call('L1splines_thetafun', PACKAGE = 'L1splines', t, y, gfun, lambda)
+}
+
+#' Outer function for gfun.
+#'
+#' @description Function to compute the matrix of Green's function evaluation for any two vectors t and tp.
+#'
+#' @param t Numeric vector of observation times.
+#' @param tp Numeric vector evaluation times.
+#' @param gfun Integer value 1-10 (choice of Greens function).
+#' @param inv Logical (want inverse matrix or not)
+#'
+#' @return Numeric vector of fitted values.
+#'
+#' @author Helene Charlotte Rytgaard
+#' @export
+outerG <- function(t, tp, gfun, inv) {
+    .Call('L1splines_outerG', PACKAGE = 'L1splines', t, tp, gfun, inv)
+}
+
+#' General solution, Green's spline.
+#'
+#' @description Function that takes the observations and computes the general spline solution. Must be combined with outerG() to obtain solution in some set of points.
+#'
+#' @param t Numeric vector of observation times.
+#' @param y Numeric vector of observations.
+#' @param gfun Integer value 1-10 (choice of Greens function).
+#' @param lambda Numeric (smoothness parameter).
+#'
+#' @return Numeric vector of fitted values.
+#'
+#' @author Helene Charlotte Rytgaard
+#' @export
+thetafunG <- function(t, y, gfun, lambda) {
+    .Call('L1splines_thetafunG', PACKAGE = 'L1splines', t, y, gfun, lambda)
 }
 

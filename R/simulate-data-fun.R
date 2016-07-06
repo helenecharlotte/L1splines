@@ -8,6 +8,7 @@
 #' @param seed If certain seed wanted.
 #' @examples
 #' generate.t()
+#' @export
 generate.t = function(type = 1, m = 15, seed = sample(2500, 1)) {
   set.seed(seed)
   if (type == 1)
@@ -29,6 +30,7 @@ generate.t = function(type = 1, m = 15, seed = sample(2500, 1)) {
 #' y = generate.y(type = 2); plot(y)
 #' y = generate.y(type = 3); plot(y)
 #' y = generate.y(type = 4); plot(y)
+#' @export
 generate.y = function(type = 1, seed = sample(2500, 1)) {
   set.seed(seed)
   a = runif(1); b = runif(1)
@@ -116,6 +118,7 @@ generate.y = function(type = 1, seed = sample(2500, 1)) {
 #' w = generate.noise(t, type = 2); plot(t, w , type="h", main = "Laplace noise")
 #' w = generate.noise(t, type = 3); plot(t, w , type="h", main = "Contaminated noise")
 #' w = generate.noise(t, type = 4); plot(t, w , type="h", main = "Uniform noise")
+#' @export
 generate.noise = function(t, type = 1, mu = 0, theta = 0, kappa = Inf,
                           sigma = 0.2, sigma2 = 1e-4,
                           seed = sample(2500, 1),

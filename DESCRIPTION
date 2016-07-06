@@ -10,23 +10,8 @@ Description: Green's functions, corresponding splines; Constrained splines;
 License: MIT
 LazyData: TRUE
 Depends:
-    R (>= 3.2.3)
+    R
 Imports:
-    dplyr,
-    gtable,
-    ggplot2,
-    grid,
-    Rmisc,
-    xtable,
-    gridExtra,
-    reshape2,
-    fda,
-    quadprog,
-    matrixcalc,
-    Matrix,
-    rgl,
-    wesanderson,
-    MASS,
     nleqslv,
     Rcpp,
     RcppArmadillo
