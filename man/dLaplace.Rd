@@ -2,7 +2,10 @@
 % Please edit documentation in R/cumulative-distribution-laplace.R
 \name{dLaplace}
 \alias{dLaplace}
-\title{Laplace density function.}
+\title{Laplace density function.
+
+The density function for the univariate Laplace distributions.
+Can use both the parametrization with respect to kappa and mu.}
 \usage{
 dLaplace(x, mu = 1, sigma = 0.5, kappa = Inf, theta = 0.5)
 }
@@ -18,9 +21,5 @@ if not specified, parametrization with mu is used.
 if specified (numeric value), parametrization with kappa used.}
 
 \item{theta}{Numeric value.}
-}
-\description{
-The density function for the univariate Laplace distributions.
-Can use both the parametrization with respect to kappa and mu.
 }
 

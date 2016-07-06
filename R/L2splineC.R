@@ -1,6 +1,6 @@
 #' @title Constrained L2 spline.
 #'
-#' @description Function to compute a constrained L2 spline.
+#' Function to compute a constrained L2 spline.
 #'
 #' @param t Numeric vector of measurement times.
 #' @param y Numeric vector of values to be fitted.

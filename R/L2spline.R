@@ -2,7 +2,7 @@
 
 #' @title Greens function 1.
 #'
-#' @description Function to compute the Greens function in two time points.
+#' Function to compute the Greens function in two time points.
 #'
 #' @param s Numeric value.
 #' @param t Numeric value.

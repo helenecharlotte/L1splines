@@ -1,7 +1,7 @@
 #' @title Laplace cumulative distribution function.
 #'
 #' The cumulative distribution function for the univariate Laplace distributions.
-#' The parametrization with kappa is used
+#' The parametrization with kappa is used.
 #'
 #' @param x Numeric value, where the function is evaluated.
 #' @param theta Numeric value.
@@ -18,7 +18,7 @@ pLaplace = function(x, theta = 0, kappa = 1, sigma = 1) {
   return(out)
 }
 
-#' Laplace quantile function.
+#' @title Laplace quantile function.
 #'
 #' The quantile function for the univariate Laplace distributions.
 #' Obtained from numerically inverting pLaplace.
@@ -37,7 +37,7 @@ qLaplace = function(q, theta = 0, kappa = 1, sigma = 1) {
     pLaplace(x, theta = theta, kappa = kappa, sigma = sigma) - q)$x)
 }
 
-#' Laplace density function.
+#' @title Laplace density function.
 #'
 #' The density function for the univariate Laplace distributions.
 #' Can use both the parametrization with respect to kappa and mu.

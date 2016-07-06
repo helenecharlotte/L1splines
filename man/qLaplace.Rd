@@ -2,7 +2,11 @@
 % Please edit documentation in R/cumulative-distribution-laplace.R
 \name{qLaplace}
 \alias{qLaplace}
-\title{Laplace quantile function.}
+\title{Laplace quantile function.
+
+The quantile function for the univariate Laplace distributions.
+Obtained from numerically inverting pLaplace.
+The parametrization with kappa is used}
 \usage{
 qLaplace(q, theta = 0, kappa = 1, sigma = 1)
 }
@@ -14,10 +18,5 @@ qLaplace(q, theta = 0, kappa = 1, sigma = 1)
 \item{kappa}{Numeric value (positive).}
 
 \item{sigma}{Numeric value (positive).}
-}
-\description{
-The quantile function for the univariate Laplace distributions.
-Obtained from numerically inverting pLaplace.
-The parametrization with kappa is used
 }
 

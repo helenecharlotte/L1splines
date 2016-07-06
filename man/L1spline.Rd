@@ -2,7 +2,9 @@
 % Please edit documentation in R/L1spline.R
 \name{L1spline}
 \alias{L1spline}
-\title{L1 spline.}
+\title{L1 spline.
+
+Function to compute the L1 spline, by use of the splitting method.}
 \usage{
 L1spline(t, y, gfun, kappa = 1, lambda = 1e-04, niter = 200, CI = 0,
   niterk = 5, stopiter = 1e-10, constr = -Inf, sign = 1, mp = 100,
@@ -45,9 +47,6 @@ Choice of constraint.
 
 \item{b}{Numeric nonnegative value, corresponding to truncation window.
 If b=0, the non-adapted spline is fitted. This is default.}
-}
-\description{
-Function to compute the L1 spline, by use of the splitting method.
 }
 \examples{
 t = generate.t(m = 25); y = generate.y()(t) + generate.noise(t, type = 2)

@@ -5,7 +5,7 @@
 \title{Laplace cumulative distribution function.
 
 The cumulative distribution function for the univariate Laplace distributions.
-The parametrization with kappa is used}
+The parametrization with kappa is used.}
 \usage{
 pLaplace(x, theta = 0, kappa = 1, sigma = 1)
 }

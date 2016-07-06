@@ -2,7 +2,9 @@
 % Please edit documentation in R/L2spline.R
 \name{G1}
 \alias{G1}
-\title{Greens function 1.}
+\title{Greens function 1.
+
+Function to compute the Greens function in two time points.}
 \usage{
 G1(s, t)
 }
@@ -10,8 +12,5 @@ G1(s, t)
 \item{s}{Numeric value.}
 
 \item{t}{Numeric value.}
-}
-\description{
-Function to compute the Greens function in two time points.
 }
 

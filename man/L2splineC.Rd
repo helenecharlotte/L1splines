@@ -2,7 +2,9 @@
 % Please edit documentation in R/L2splineC.R
 \name{L2splineC}
 \alias{L2splineC}
-\title{Constrained L2 spline.}
+\title{Constrained L2 spline.
+
+Function to compute a constrained L2 spline.}
 \usage{
 L2splineC(t, y, gfun, mp = 100, constr = 0, sign = 1, lambda = 1e-04)
 }
@@ -26,9 +28,6 @@ Choice of constraint.
 -1: Decreasing, concavity.}
 
 \item{lambda}{Smoothness parameter.}
-}
-\description{
-Function to compute a constrained L2 spline.
 }
 \examples{
 t = generate.t(m = 25); y = generate.y(type = 2)(t) + generate.noise(t) + generate.noise(t)
