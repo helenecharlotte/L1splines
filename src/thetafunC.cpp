@@ -2,7 +2,7 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 
-//' Outer function for gfun.
+//' @title Outer function for gfun.
 //'
 //' @description Function to compute the matrix of Green's function evaluation for any two vectors t and tp.
 //'
@@ -59,7 +59,7 @@ NumericMatrix outerG(NumericVector t, NumericVector tp, int gfun, bool inv){
   }
 }
 
-//' General solution, Green's spline.
+//' @title General solution, Green's spline.
 //'
 //' @description Function that takes the observations and computes the general spline solution. Must be combined with outerG() to obtain solution in some set of points.
 //'

@@ -1,4 +1,4 @@
-#' Laplace cumulative distribution function.
+#' @title Laplace cumulative distribution function.
 #'
 #' The cumulative distribution function for the univariate Laplace distributions.
 #' The parametrization with kappa is used

@@ -2,7 +2,10 @@
 % Please edit documentation in R/cumulative-distribution-laplace.R
 \name{pLaplace}
 \alias{pLaplace}
-\title{Laplace cumulative distribution function.}
+\title{Laplace cumulative distribution function.
+
+The cumulative distribution function for the univariate Laplace distributions.
+The parametrization with kappa is used}
 \usage{
 pLaplace(x, theta = 0, kappa = 1, sigma = 1)
 }
@@ -14,9 +17,5 @@ pLaplace(x, theta = 0, kappa = 1, sigma = 1)
 \item{kappa}{Numeric value (positive).}
 
 \item{sigma}{Numeric value (positive).}
-}
-\description{
-The cumulative distribution function for the univariate Laplace distributions.
-The parametrization with kappa is used
 }
 

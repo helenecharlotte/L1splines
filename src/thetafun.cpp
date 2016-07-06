@@ -2,7 +2,7 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 
-//' Spline function.
+//' @title Spline function.
 //'
 //' @description Function to fit the L2 spline using some Greens function.
 //'

@@ -1,6 +1,6 @@
-#' L1 spline.
+#' @title L1 spline.
 #'
-#' Function to compute the L1 spline, by use of the splitting method.
+#' @description Function to compute the L1 spline, by use of the splitting method.
 #'
 #' @param t Numeric vector of measurement times.
 #' @param y Numeric vector of values to be fitted.

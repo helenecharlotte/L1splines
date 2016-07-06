@@ -2,7 +2,7 @@
 % Please edit documentation in R/L2spline.R
 \name{L2spline}
 \alias{L2spline}
-\title{Spline function.}
+\title{L2 spline function.}
 \usage{
 L2spline(t, y, gfun, lambda = 0.001, x = Inf)
 }
