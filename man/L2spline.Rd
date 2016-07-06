@@ -2,15 +2,29 @@
 % Please edit documentation in R/RcppExports.R
 \name{L2spline}
 \alias{L2spline}
-\title{something something}
+\title{Spline function.}
 \usage{
 L2spline(t, y, gfun, lambda)
 }
 \arguments{
-\item{x}{A matrix.}
+\item{t}{Numeric vector of evaluation times.}
+
+\item{y}{Numeric vector to be fitted.}
+
+\item{gfun}{Integer value 1-10 (choice of Greens function).}
+
+\item{lambda}{Numeric (smoothness parameter).}
 }
 \value{
-A matrix of same size as x.
+Numeric vector of fitted values.
+}
+\description{
+Function to fit the L2 spline using some Greens function.
+}
+\examples{
+t = generate.t(m = 25); y = generate.y()(t) + generate.noise(t, type = 2)
+plot(t, y, col = "blue")
+lines(t, thetafun(t, y, 9, lambda = 0.0001))
 }
 \author{
 Helene Charlotte Rytgaard

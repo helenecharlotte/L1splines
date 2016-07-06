@@ -73,10 +73,10 @@ profileFun = function(FUN, ..., rep=100) {
 
 bmplot = function(p)
   autoplot(p) +
-    theme(plot.title       = element_text(face="bold", size=20),
-          axis.text        = element_text(size = 15, color="black"),
-          axis.title       = element_text(size = 15),
-          legend.text      = element_text(size = 15),
+    theme(plot.title       = element_text(face="bold", size=12),
+          axis.text        = element_text(size = 12, color="black"),
+          axis.title       = element_text(size = 12),
+          legend.text      = element_text(size = 12),
           legend.key.size  = unit(0.4, "in"),
           plot.margin      = unit(c(0.1,0.1,0.1,0.1), "in"),
           panel.grid.major = element_line(size = 0.7),

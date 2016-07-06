@@ -6,29 +6,6 @@
 
 using namespace Rcpp;
 
-// plusfun
-double plusfun(double x);
-RcppExport SEXP L1splines_plusfun(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    __result = Rcpp::wrap(plusfun(x));
-    return __result;
-END_RCPP
-}
-// G1
-double G1(double s, double t);
-RcppExport SEXP L1splines_G1(SEXP sSEXP, SEXP tSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< double >::type s(sSEXP);
-    Rcpp::traits::input_parameter< double >::type t(tSEXP);
-    __result = Rcpp::wrap(G1(s, t));
-    return __result;
-END_RCPP
-}
 // L2spline
 NumericVector L2spline(NumericVector t, NumericVector y, int gfun, double lambda);
 RcppExport SEXP L1splines_L2spline(SEXP tSEXP, SEXP ySEXP, SEXP gfunSEXP, SEXP lambdaSEXP) {
