@@ -8,7 +8,6 @@
 #' @param kappa Numeric value (positive).
 #' @param sigma Numeric value (positive).
 pLaplace = function(x, theta = 0, kappa = 1, sigma = 1) {
-  ## Recall: kappa = 1 corresponds to symmetric, L(theta, sigma)
   if (sigma < 0) stop("sigma must be positive")
   if (kappa < 0) stop("kappa must be positive")
   if (x < theta)
@@ -29,7 +28,6 @@ pLaplace = function(x, theta = 0, kappa = 1, sigma = 1) {
 #' @param kappa Numeric value (positive).
 #' @param sigma Numeric value (positive).
 qLaplace = function(q, theta = 0, kappa = 1, sigma = 1) {
-  ## Recall: kappa = 1 corresponds to symmetric, L(theta, sigma)
   if (q < 0 || q > 1) stop("q must be in (0,1)")
   if (sigma < 0) stop("sigma must be positive")
   if (kappa < 0) stop("kappa must be positive")

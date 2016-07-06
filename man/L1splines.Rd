@@ -4,4 +4,5 @@
 \name{L1splines}
 \alias{L1splines}
 \alias{L1splines-package}
+\title{L1splines}
 
