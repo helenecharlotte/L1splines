@@ -13,6 +13,7 @@ Depends:
     R
 Imports:
     nleqslv,
+    quadprog,
     Rcpp,
     RcppArmadillo
 URL: https://github.com/helenecharlotte/rSplines
