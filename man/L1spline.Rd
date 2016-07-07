@@ -6,9 +6,9 @@
 
 Function to compute the L1 spline, by use of the splitting method.}
 \usage{
-L1spline(t, y, gfun, kappa = 1, lambda = 1e-04, niter = 200, CI = 0,
-  niterk = 5, stopiter = 1e-10, constr = -Inf, sign = 1, mp = 100,
-  b = 0)
+L1spline(t, y, gfun, kappa = 1, lambda = 1e-04, x = Inf, niter = 200,
+  CI = 0, niterk = 5, stopiter = 1e-10, constr = -Inf, sign = 1,
+  mp = 100, b = 0)
 }
 \arguments{
 \item{t}{Numeric vector of measurement times.}
@@ -21,6 +21,8 @@ L1spline(t, y, gfun, kappa = 1, lambda = 1e-04, niter = 200, CI = 0,
 Default is kappa = 1, corresponding to no skewness.}
 
 \item{lambda}{Smoothness parameter.}
+
+\item{x}{Numeric vector. If specified, spline is computed in this set of points.}
 
 \item{niter}{Number of iterations.}
 

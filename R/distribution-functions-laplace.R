@@ -8,6 +8,7 @@
 #' @param theta Numeric value.
 #' @param kappa Numeric value (positive).
 #' @param sigma Numeric value (positive).
+#' @export
 pLaplace = function(x, mu=Inf, theta=0, kappa=1, sigma=1) {
   if (sigma < 0) stop("sigma must be positive")
   if (kappa < 0) stop("kappa must be positive")
@@ -30,6 +31,7 @@ pLaplace = function(x, mu=Inf, theta=0, kappa=1, sigma=1) {
 #' @param theta Numeric value.
 #' @param kappa Numeric value (positive).
 #' @param sigma Numeric value (positive).
+#' @export
 qLaplace = function(q, mu=Inf, theta=0, kappa=1, sigma=1) {
   if (q < 0 || q > 1) stop("q must be in (0,1)")
   if (sigma < 0) stop("sigma must be positive")
@@ -49,6 +51,7 @@ qLaplace = function(q, mu=Inf, theta=0, kappa=1, sigma=1) {
 #' @param theta Numeric value.
 #' @param kappa Numeric value (positive).
 #' @param sigma Numeric value (positive).
+#' @export
 dLaplace = function(x, mu=Inf, theta=0, kappa=1, sigma=1) {
   if (sigma < 0) stop("sigma must be positive")
   if (kappa < 0) stop("kappa must be positive")
@@ -68,6 +71,7 @@ dLaplace = function(x, mu=Inf, theta=0, kappa=1, sigma=1) {
 #' @param theta Numeric value.
 #' @param kappa Numeric value (positive).
 #' @param sigma Numeric value (positive).
+#' @export
 rLaplace = function(m, mu=Inf, theta=0, kappa=1, sigma=1) {
   if (sigma < 0) stop("sigma must be positive")
   if (kappa < 0) stop("kappa must be positive")

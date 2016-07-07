@@ -5,6 +5,7 @@
 #' @param t Numeric vector of measurement times.
 #' @param y Numeric vector of values to be fitted.
 #' @param gfun Choice of Greens function (1-10).
+#' @param x Numeric vector. If specified, spline is computed in this set of points.
 #' @param kappa Asymmetry parameter. Kappa is estimated if kappa=NULL is specified.
 #'        Default is kappa = 1, corresponding to no skewness.
 #' @param CI Option to compute confidence intervals.
@@ -31,7 +32,7 @@
 #' plot(t, y, col = "blue")
 #' lines(t, L1spline(t, y, 9, lambda = 0.0001))
 #' @export
-L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, niter=200,
+L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
                     CI=0, niterk=5, stopiter=1e-10,
                     constr=-Inf, sign=1, mp=100,
                     b=0) {
@@ -78,6 +79,7 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, niter=200,
           theta[, k+1] = L2spline(t, psi[, k], gfun, lambda = lambda/beta)
         if (constr > -10)
           theta[, k+1] = L2splineC(t, psi[, k], gfun, mp=mp, constr=constr, sign=sign, lambda=lambda/beta)
+
         psi[, k+1]   = L1optAL(kappa, theta[, k+1])
 
         if (k > 1 & dist(theta[, k+1],  theta[, k]) < stopiter) break
@@ -92,7 +94,7 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, niter=200,
     }
 
     if (constr < -10)
-      out = L2spline(t, yout, gfun, lambda=lambda)
+      out = L2spline(t, yout, gfun, lambda=lambda, x=x)
     if (constr > -10)
       out = L2splineC(t, yout, gfun, mp=mp, constr=constr, sign=sign, lambda=lambda)
 
