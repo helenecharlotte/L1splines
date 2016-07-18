@@ -6,7 +6,8 @@
 
 Function to compute a constrained L2 spline.}
 \usage{
-L2splineC(t, y, gfun, mp = 100, constr = 0, sign = 1, lambda = 1e-04)
+L2splineC(t, y, gfun, y0 = 0, mp = 100, constr = 0, sign = 1,
+  lambda = 1e-04)
 }
 \arguments{
 \item{t}{Numeric vector of measurement times.}
@@ -14,6 +15,8 @@ L2splineC(t, y, gfun, mp = 100, constr = 0, sign = 1, lambda = 1e-04)
 \item{y}{Numeric vector of values to be fitted.}
 
 \item{gfun}{Choice of Greens function (choose from G1-G10).}
+
+\item{y0}{Numeric value to move y-values up or down. Per default y0 = 0.}
 
 \item{mp}{Integer value. Number of points to evaluate spline in.}
 

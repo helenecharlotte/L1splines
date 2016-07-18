@@ -4,7 +4,7 @@
 \alias{L2spline}
 \title{L2 spline function.}
 \usage{
-L2spline(t, y, gfun, lambda = 0.001, x = Inf)
+L2spline(t, y, gfun, y0 = 0, lambda = 0.001, x = Inf)
 }
 \arguments{
 \item{t}{Numeric vector of observation times.}
@@ -12,6 +12,8 @@ L2spline(t, y, gfun, lambda = 0.001, x = Inf)
 \item{y}{Numeric vector to be fitted.}
 
 \item{gfun}{Choice of Greens function (1-10).}
+
+\item{y0}{Numeric value to move y-values up or down. Per default y0 = 0.}
 
 \item{lambda}{Smoothness parameter.}
 

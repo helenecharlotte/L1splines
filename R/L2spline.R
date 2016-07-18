@@ -116,10 +116,11 @@ L2spline = function(t, y, gfun, y0=0, lambda=0.001, x = Inf) {
   if (is.numeric(gfun) & (!(gfun %in% (1:10))))
     stop(paste('gfun must be in 1-10'))
 
-  if (any(x < Inf))
+  if (any(x < Inf)) {
     out = outerG(t, x, gfun, 0) %*% thetafunG(t, y, gfun, lambda)
-  else
+  } else {
     out = thetafun(t, y, gfun, lambda)
+  }
 
   return(as.numeric(out - y0))
 }

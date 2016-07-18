@@ -6,9 +6,9 @@
 
 Function to compute the L1 spline, by use of the splitting method.}
 \usage{
-L1spline(t, y, gfun, kappa = 1, lambda = 1e-04, x = Inf, niter = 200,
-  CI = 0, niterk = 5, stopiter = 1e-10, constr = -Inf, sign = 1,
-  mp = 100, b = 0)
+L1spline(t, y, gfun, y0 = 0, kappa = 1, lambda = 1e-04, x = Inf,
+  niter = 200, sw = NULL, t0 = NULL, CI = 0, niterk = 5,
+  stopiter = 1e-10, constr = -Inf, sign = 1, mp = 100, b = 0)
 }
 \arguments{
 \item{t}{Numeric vector of measurement times.}
@@ -16,6 +16,8 @@ L1spline(t, y, gfun, kappa = 1, lambda = 1e-04, x = Inf, niter = 200,
 \item{y}{Numeric vector of values to be fitted.}
 
 \item{gfun}{Choice of Greens function (1-10).}
+
+\item{y0}{Numeric value to move y-values up or down. Per default y0 = 0.}
 
 \item{kappa}{Asymmetry parameter. Kappa is estimated if kappa=NULL is specified.
 Default is kappa = 1, corresponding to no skewness.}
@@ -25,6 +27,13 @@ Default is kappa = 1, corresponding to no skewness.}
 \item{x}{Numeric vector. If specified, spline is computed in this set of points.}
 
 \item{niter}{Number of iterations.}
+
+\item{sw}{Integer value corresponding to number of anchor points used in sigma estimation.
+Default is sw=NULL, corresponding to no sigma estimation.}
+
+\item{t0}{Numeric vector of anchor points used in sigma estimation.
+Default is t0=NULL, so that sigma estimation is only performed when sw is not NULL.
+If t0 is specified, this overrules sw.}
 
 \item{CI}{Option to compute confidence intervals.
 0: Nothing is computed.

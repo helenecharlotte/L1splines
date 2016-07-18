@@ -144,11 +144,11 @@ generate.noise = function(t, type = 1, mu = 0, theta = 0, kappa = Inf,
     noise = c(1, rep(0, length(t)-2), 1) * runif(m, min = -sigma, max = sigma) +
       rnorm(m, sd = sigma / 2)
   if (type == 6) {
-    noise = rlaplace(m, mu = mu, theta = theta, kappa = kappa, sigma = sigma * tfun(t + 0.01))
+    noise = rLaplace(m, mu = mu, theta = theta, kappa = kappa, sigma = sigma * tfun(t + 0.01))
     attr(noise, "sigma") = sigma * tfun(t + 0.01)
   }
   if (type == 7) {
-    noise = rlaplace(m, theta = 0, kappa = kappa * tfun(t + 0.01), sigma = sigma)
+    noise = rLaplace(m, theta = 0, kappa = kappa * tfun(t + 0.01), sigma = sigma)
     attr(noise, "kappa") = kappa * tfun(t + 0.01)
   }
 
