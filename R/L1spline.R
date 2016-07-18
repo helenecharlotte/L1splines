@@ -4,6 +4,7 @@
 #'
 #' @param t Numeric vector of measurement times.
 #' @param y Numeric vector of values to be fitted.
+#' @param y0 Numeric value to move y-values up or down. Per default y0 = 0.
 #' @param gfun Choice of Greens function (1-10).
 #' @param x Numeric vector. If specified, spline is computed in this set of points.
 #' @param kappa Asymmetry parameter. Kappa is estimated if kappa=NULL is specified.
@@ -12,6 +13,11 @@
 #'                0: Nothing is computed.
 #'                1: sigmahat is obtain from kappa(hat) and thetahat, and CI is computed.
 #' @param lambda Smoothness parameter.
+#' @param sw Integer value corresponding to number of anchor points used in sigma estimation.
+#'           Default is sw=NULL, corresponding to no sigma estimation.
+#' @param t0 Numeric vector of anchor points used in sigma estimation.
+#'           Default is t0=NULL, so that sigma estimation is only performed when sw is not NULL.
+#'           If t0 is specified, this overrules sw.
 #' @param niter Number of iterations.
 #' @param niterk Number of iterations for the kappa estimation.
 #' @param stopiter Stopping criterion.
@@ -32,7 +38,8 @@
 #' plot(t, y, col = "blue")
 #' lines(t, L1spline(t, y, 9, lambda = 0.0001))
 #' @export
-L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
+L1spline = function(t, y, gfun, y0=0, kappa=1, lambda=0.0001, x=Inf, niter=200,
+                    sw=NULL, t0=NULL,
                     CI=0, niterk=5, stopiter=1e-10,
                     constr=-Inf, sign=1, mp=100,
                     b=0) {
@@ -45,25 +52,31 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
 
   m = length(t)
 
-  if (!is.numeric(kappa) | CI == 1) {
+  if (is.numeric(t0)) {
+    sw = length(t0)
+  }
+
+  if (!is.numeric(kappa) | CI == 1 | is.numeric(sw)) {
     pfun = function(y, x)
       (y - x)*(y > x)
     mfun = function(y, x)
       (x - y)*(y < x)
   }
 
-  iterfun = function(kappa, x) {
+  iterfun = function(kappa, x, sigma) {
 
     beta = 1.1
 
     theta = psi = matrix(y, m, niter)
 
-    L1optAL = function(kappa, x) {
+    L1optAL = function(kappa, x, sigma) {
       out = y
-      out[x < y - kappa / (2 * beta)]     = (kappa / (2 * beta) + x)[x < y - kappa / (2 * beta)]
-      out[x > 1 / (kappa * 2 * beta) + y] = (- 1 / (kappa * 2 * beta) + x)[x > 1 / (kappa * 2 * beta) + y]
+      out[x < y - kappa / (2 * sigma * beta)] =
+        (kappa / (2 * sigma * beta) + x)[x < y - kappa / (2 * sigma * beta)]
+      out[x > 1 / (kappa * 2 * sigma * beta) + y] =
+        (- 1 / (kappa * 2 * sigma * beta) + x)[x > 1 / (kappa * 2 * sigma * beta) + y]
       if (b > 0)
-        out[abs(x - y) < b]               = x[abs(x - y) < b]
+        out[abs(x - y) < b] = x[abs(x - y) < b]
       return(out)
     }
 
@@ -76,11 +89,12 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
         beta     = beta * 1.1
 
         if (constr < -10)
-          theta[, k+1] = L2spline(t, psi[, k], gfun, lambda = lambda/beta)
+          theta[, k+1] = L2spline(t, psi[, k], gfun, y0 = y0, lambda = lambda/beta)
         if (constr > -10)
-          theta[, k+1] = L2splineC(t, psi[, k], gfun, mp=mp, constr=constr, sign=sign, lambda=lambda/beta)
+          theta[, k+1] = L2splineC(t, psi[, k], gfun, y0 = y0,
+                                   mp=mp, constr=constr, sign=sign, lambda=lambda/beta)
 
-        psi[, k+1]   = L1optAL(kappa, theta[, k+1])
+        psi[, k+1]   = L1optAL(kappa, theta[, k+1], sigma)
 
         if (k > 1 & dist(theta[, k+1],  theta[, k]) < stopiter) break
       }
@@ -94,9 +108,9 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
     }
 
     if (constr < -10)
-      out = L2spline(t, yout, gfun, lambda=lambda, x=x)
+      out = L2spline(t, yout, gfun, y0 = y0, lambda=lambda, x=x)
     if (constr > -10)
-      out = L2splineC(t, yout, gfun, mp=mp, constr=constr, sign=sign, lambda=lambda)
+      out = L2splineC(t, yout, gfun, y0 = y0, mp=mp, constr=constr, sign=sign, lambda=lambda)
 
     attr(out, "niter") = k
     attr(out, "kappa") = kappa
@@ -114,7 +128,7 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
     kappa1[[1]] = 1
 
     for (j in 1:niterk) {
-      out           = iterfun(kappa1[[j]], x)
+      out           = iterfun(kappa1[[j]], x, 1)
       kappa1[[j+1]] = kappahat(out, y, m)
     }
 
@@ -125,16 +139,51 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
 
   }
 
-  out = iterfun(kappa, x)
+  if (is.numeric(sw)) {
+
+    if (is.numeric(t0)) {
+      sigma = t0
+    } else {
+      qseq = seq(0, 1, length = 2*sw+1)[2:(2*sw)]
+      t0   = as.numeric((quantile(t, p = qseq))[(1:length(qseq))%%2 == 1])
+    }
+
+    sigmat = function(t, t0, sigmavec) {
+      if (any(sigmavec < 0)) stop('Negative variance')
+      return(approx(t0, sigmavec, xout = t, rule = 2)$y)
+    }
+
+    Qs = function(theta, sigma, y, m, kappa)
+      return(sum(log(sigma)) + sum(sqrt(2) * kappa / sigma * pfun(y, theta)) +
+               sum(sqrt(2) / (sigma * kappa) * mfun(y, theta)))
+
+    optfun = function(s) {
+      sigma = sigmat(t, t0, abs(s))
+      theta = iterfun(kappa, Inf, sigma)
+      return(Qs(theta, sigma, y, m, kappa))
+    }
+
+    w0    = abs(optim(rep(1, length(t0)), optfun)$par)
+    sigma = sigmat(t, t0, w0)
+
+  } else {
+    sigma = 1
+  }
+
+  out = iterfun(kappa, x, sigma)
   attr(out, "kappa")    = kappa
   attr(out, "kappavec") = unlist(kappa1)
 
   if (CI == 1) {
-    sigmahat = function(m, y, theta, kappa) {
-      return(sqrt(2) / m * (sum(pfun(y, theta)) * kappa + sum(mfun(y, theta)) / kappa))
-    }
 
-    sigmahat = sigmahat(m, y, out, kappa)
+    if (!is.numeric(sw)) {
+      sigmahat = function(m, y, theta, kappa) {
+        return(sqrt(2) / m * (sum(pfun(y, theta)) * kappa + sum(mfun(y, theta)) / kappa))
+      }
+      sigmahat = sigmahat(m, y, out, kappa)
+    } else {
+      sigmahat = sigma
+    }
 
     q1 = qLaplace(0.025, kappa = kappa)
     q2 = qLaplace(0.975, kappa = kappa)
@@ -145,8 +194,12 @@ L1spline = function(t, y, gfun, kappa=1, lambda=0.0001, x=Inf, niter=200,
     attr(out, "CI")    = sapply(c(q1, q2), function(q) out + q * sigmahat)
   }
 
+  if (is.numeric(sw)) {
+    attr(out, "sigma") = sigma
+    attr(out, "t0")     = t0
+    attr(out, "w0")     = w0
+  }
+
   return(out)
 }
-
-
 

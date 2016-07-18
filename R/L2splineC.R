@@ -4,6 +4,7 @@
 #'
 #' @param t Numeric vector of measurement times.
 #' @param y Numeric vector of values to be fitted.
+#' @param y0 Numeric value to move y-values up or down. Per default y0 = 0.
 #' @param gfun Choice of Greens function (choose from G1-G10).
 #' @param mp Integer value. Number of points to evaluate spline in.
 #' @param constr Integer value in (0, 1, 2).
@@ -29,7 +30,7 @@
 #' S = L2splineC(t, y, 1, constr=0)
 #' lines(t, S)
 #' @export
-L2splineC = function(t, y, gfun, mp=100, constr=0, sign=1, lambda=0.0001) {
+L2splineC = function(t, y, gfun, y0=0, mp=100, constr=0, sign=1, lambda=0.0001) {
 
   if (length(t) != length(y)) stop(paste('t and y must have same length'))
   if (!is.numeric(gfun))
@@ -44,6 +45,9 @@ L2splineC = function(t, y, gfun, mp=100, constr=0, sign=1, lambda=0.0001) {
     stop(paste('sign must be in (-1, 1)'))
   if (is.numeric(sign) & (!(sign %in% c(-1, 1))))
     stop(paste('sign must be in (-1, 1)'))
+
+  t = (t - t[1]) / max(t - t[1])
+  y = y + y0
 
   tp = seq(0, 1, length = mp)
 
@@ -77,5 +81,5 @@ L2splineC = function(t, y, gfun, mp=100, constr=0, sign=1, lambda=0.0001) {
 
   out = spline(tp, thetahat_c, xout = t)$y
 
-  return(out)
+  return(out - y0)
 }

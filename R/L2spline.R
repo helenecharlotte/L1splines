@@ -96,6 +96,7 @@ G10 = function(s, t)
 #'
 #' @param t Numeric vector of observation times.
 #' @param y Numeric vector to be fitted.
+#' @param y0 Numeric value to move y-values up or down. Per default y0 = 0.
 #' @param gfun Choice of Greens function (1-10).
 #' @param x Numeric vector. If specified, spline is computed in this set of points.
 #' @param lambda Smoothness parameter.
@@ -104,7 +105,9 @@ G10 = function(s, t)
 #' plot(t, y, col = "blue")
 #' lines(t, thetafun(t, y, G9, lambda = 0.0001))
 #' @export
-L2spline = function(t, y, gfun, lambda=0.001, x = Inf) {
+L2spline = function(t, y, gfun, y0=0, lambda=0.001, x = Inf) {
+  t = (t - t[1]) / max(t - t[1])
+  y = y + y0
   m = length(t)
 
   if (length(t) != length(y)) stop(paste('t and y must have same length'))
@@ -118,7 +121,5 @@ L2spline = function(t, y, gfun, lambda=0.001, x = Inf) {
   else
     out = thetafun(t, y, gfun, lambda)
 
-  return(as.numeric(out))
+  return(as.numeric(out - y0))
 }
-
-

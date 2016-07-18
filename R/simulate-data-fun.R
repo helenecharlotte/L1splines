@@ -93,10 +93,15 @@ generate.y = function(type = 1, seed = sample(2500, 1)) {
   if (type == 13)
     y = function(t)
       1 - abs(t-2/3) - abs(t-1/3)
-
+  if (type == 14)
+    y = function(t) {
+      i = findInterval(t, c(0, a, 1), all.inside = TRUE)
+      return(c(a, b)[i])
+    }
   ynorm = sapply(seq(0, 1, length = 100), function(t) y(t) - y(0))
   return(function(t) 2.5 * (y(t) - y(0)) / (max(ynorm) - min(ynorm)))
 }
+
 
 ##--- generate noise
 #' @title Generate random noise.
@@ -128,7 +133,7 @@ generate.noise = function(t, type = 1, mu = 0, theta = 0, kappa = Inf,
   if (type == 1)
     noise = rnorm(m, mean = mu, sd = sigma)
   if (type == 2)
-    noise = rlaplace(m, mu = mu, theta = theta, kappa = kappa, sigma = sigma)
+    noise = rLaplace(m, mu = mu, theta = theta, kappa = kappa, sigma = sigma)
   if (type == 3) {
     w     = rbinom(m, 1, 0.35);
     noise = w * rnorm(m, sd = sigma) + (1-w) * rnorm(m, sd = sigma2)
