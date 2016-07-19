@@ -157,3 +157,46 @@ generate.noise = function(t, type = 1, mu = 0, theta = 0, kappa = Inf,
   return(noise)
 }
 
+##--- data generation function
+#' @title Generate sample times.
+#'
+#' Function to generate different kinds of sample times.
+#'
+#' @param m Length of output vector. Default is 15.
+#' @param seed If certain seed wanted.
+#' @param t.type Numeric value (1,2).
+#' @param y.type Numeric value (1,2,...,10).
+#' @param n.type Numeric value (1,...,8).
+#' @param mu Numeric value.
+#' @param theta Numeric value.
+#' @param kappa Numeric value.
+#' @param sigma Numeric value.
+#' @param sigma2 Numeric value. Smaller SE for contaminated noise.
+#' @param seed If certain seed wanted.
+#' @param tfun For generating noise with dynamically changing parameters.
+#' @export
+generate.data = function(m = 15, seed = sample(2500, 1),
+                         t.type = 1, y.type = 1, n.type = 1,
+                         mu = 0, theta = 0, kappa = Inf,
+                         sigma = 0.2, sigma2 = 1e-4,
+                         tfun = function(t) t / 4) {
+  set.seed(seed)
+
+  t     = generate.t(type = t.type, m = m, seed = seed+1)
+  theta = generate.y(type = y.type, seed = seed+2)
+  y0    = theta(t)
+  noise = generate.noise(t, type = n.type,
+                         mu = mu, theta = theta, kappa = kappa,
+                         sigma = sigma, sigma2 = sigma2,
+                         seed = seed+3,
+                         tfun = tfun)
+  y     = y0 + noise
+
+  attr(y, "t")
+  attr(y, "theta")
+  attr(y, "y0")
+  attr(y, "noise")
+
+  return(y)
+}
+

@@ -80,4 +80,3 @@ rLaplace = function(m, mu=Inf, theta=0, kappa=1, sigma=1) {
   U2 = runif(m)
   return(theta + sigma / sqrt(2) * log(U1^kappa / U2^(1 / kappa)))
 }
-
