@@ -36,4 +36,3 @@ rMultiLaplace = function(n=1, theta=c(0, 0), gamma=c(0,0), Sigma=diag(2),
 
   return(out)
 }
-
