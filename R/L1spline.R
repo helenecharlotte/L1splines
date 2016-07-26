@@ -71,13 +71,23 @@ L1spline = function(t, y, gfun, y0=0, kappa=1, lambda=0.0001, x=Inf, niter=200,
 
     L1optAL = function(kappa, x, sigma) {
       out = y
-      out[x < y - kappa / (sqrt(2) * sigma * beta)] =
-        (kappa / (sqrt(2) * sigma * beta) + x)[x < y - kappa / (sqrt(2) * sigma * beta)]
-      out[x > 1 / (kappa * sqrt(2) * sigma * beta) + y] =
-        (- 1 / (kappa * sqrt(2) * sigma * beta) + x)[x > 1 / (kappa * sqrt(2) * sigma * beta) + y]
-      if (b > 0)
-        out[abs(x - y) < b - 1 / (sqrt(2) * sigma * beta)] =
-           x[abs(x - y) < b - 1 / (sqrt(2) * sigma * beta)]
+      if (b == 0) {
+        out[x < y - kappa / (sqrt(2) * sigma * beta)] =
+          (kappa / (sqrt(2) * sigma * beta) + x)[x < y - kappa / (sqrt(2) * sigma * beta)]
+        out[x > 1 / (kappa * sqrt(2) * sigma * beta) + y] =
+          (- 1 / (kappa * sqrt(2) * sigma * beta) +
+             x)[x > 1 / (kappa * sqrt(2) * sigma * beta) + y]
+      } else if (b > 0) {
+        out[x - y > b]  = (y+b)[x - y > b]
+        out[x - y < -b] = (y-b)[x - y < -b]
+        out[x < y - kappa / (sqrt(2) * sigma * beta) - b] =
+          (kappa / (sqrt(2) * sigma * beta) +
+             x)[x < y - kappa / (sqrt(2) * sigma * beta) - b]
+        out[x > 1 / (kappa * sqrt(2) * sigma * beta) + y + b] =
+          (- 1 / (kappa * sqrt(2) * sigma * beta) +
+             x)[x > 1 / (kappa * sqrt(2) * sigma * beta) + y + b]
+        out[abs(x - y) < b] = x[abs(x - y) < b]
+      }
       return(out)
     }
 
