@@ -133,6 +133,8 @@ generate.noise = function(t, type = 1, mu = 0, theta = 0, kappa = Inf,
   if (type == 1)
     noise = rnorm(m, mean = mu, sd = sigma)
   if (type == 2)
+    if (kappa < Inf)
+      mu = Inf
     noise = rLaplace(m, mu = mu, theta = theta, kappa = kappa, sigma = sigma)
   if (type == 3) {
     w     = rbinom(m, 1, 0.35);
