@@ -16,7 +16,7 @@ pLaplace = function(x, mu=Inf, theta=0, kappa=1, sigma=1) {
   if (x < theta)
     out = kappa^2 / (1 + kappa^2) * exp(- sqrt(2) / (sigma * kappa) * abs(x - theta))
   else
-    out = 1 - 1 / (1 + kappa^2) * exp(- sqrt(2) / (sigma * kappa) * abs(x - theta))
+    out = 1 - 1 / (1 + kappa^2) * exp(- sqrt(2) * kappa / (sigma) * abs(x - theta))
   return(out)
 }
 
